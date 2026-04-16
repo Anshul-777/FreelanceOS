@@ -13,9 +13,9 @@ from routers import auth_router, dashboard, projects, clients, time_entries, inv
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
+    create_tables()
     yield
     print("Shutting down FreelanceOS API")
-
 
 app = FastAPI(
     title=settings.APP_NAME,
