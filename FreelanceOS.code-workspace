@@ -1,0 +1,142 @@
+{
+  "folders": [
+    {
+      "name": "FreelanceOS — Root",
+      "path": "."
+    },
+    {
+      "name": "Backend (FastAPI)",
+      "path": "backend"
+    },
+    {
+      "name": "Frontend (React)",
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python",
+      "editor.tabSize": 4
+    },
+    "python.defaultInterpreterPath": "${workspaceFolder:Backend (FastAPI)}/venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "emmet.includeLanguages": { "javascript": "javascriptreact" },
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/node_modules": true,
+      "**/.vite": true,
+      "**/venv": true,
+      "**/*.db-shm": true,
+      "**/*.db-wal": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/venv": true,
+      "**/__pycache__": true
+    },
+    "terminal.integrated.env.linux": {},
+    "terminal.integrated.env.osx": {},
+    "terminal.integrated.env.windows": {}
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "esbenp.prettier-vscode",
+      "bradlc.vscode-tailwindcss",
+      "dbaeumer.vscode-eslint",
+      "formulahendry.auto-rename-tag",
+      "christian-kohler.path-intellisense",
+      "humao.rest-client",
+      "rangav.vscode-thunder-client"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🐍 Backend — FastAPI",
+        "type": "python",
+        "request": "launch",
+        "module": "uvicorn",
+        "args": [
+          "main:app",
+          "--host", "0.0.0.0",
+          "--port", "8000",
+          "--reload"
+        ],
+        "cwd": "${workspaceFolder:Backend (FastAPI)}",
+        "env": {},
+        "console": "integratedTerminal",
+        "justMyCode": true
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🚀 Start Backend",
+        "type": "shell",
+        "command": "cd backend && source venv/bin/activate 2>/dev/null || venv\\Scripts\\activate && python main.py",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new",
+          "name": "Backend"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🌐 Start Frontend",
+        "type": "shell",
+        "command": "cd frontend && npm run dev",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new",
+          "name": "Frontend"
+        },
+        "problemMatcher": ["$eslint-stylish"]
+      },
+      {
+        "label": "⚡ Start Both (Backend + Frontend)",
+        "dependsOn": ["🚀 Start Backend", "🌐 Start Frontend"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📦 Install Frontend Dependencies",
+        "type": "shell",
+        "command": "cd frontend && npm install",
+        "group": "build",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "🐍 Setup Backend Venv",
+        "type": "shell",
+        "command": "cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+        "group": "build",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "🗑️ Reset Database",
+        "type": "shell",
+        "command": "cd backend && rm -f freelanceos.db && echo 'Database reset. Restart backend to re-seed.'",
+        "group": "build",
+        "presentation": { "reveal": "always", "panel": "shared" },
+        "problemMatcher": []
+      }
+    ]
+  }
+}

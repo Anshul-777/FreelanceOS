@@ -1,0 +1,121 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🚀 Start Backend",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd backend && ([ ! -d venv ] && python3 -m venv venv || true) && source venv/bin/activate && pip install -r requirements.txt -q && python main.py"
+      ],
+      "windows": {
+        "command": "cmd",
+        "args": [
+          "/c",
+          "cd backend && (if not exist venv python -m venv venv) && venv\\Scripts\\activate && pip install -r requirements.txt -q && python main.py"
+        ]
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "freelanceos"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting",
+          "endsPattern": "Application startup complete"
+        }
+      }
+    },
+    {
+      "label": "🌐 Start Frontend",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd frontend && ([ ! -d node_modules ] && npm install || true) && npm run dev"
+      ],
+      "windows": {
+        "command": "cmd",
+        "args": [
+          "/c",
+          "cd frontend && (if not exist node_modules npm install) && npm run dev"
+        ]
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "freelanceos"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in"
+        }
+      }
+    },
+    {
+      "label": "⚡ FreelanceOS — Start Both",
+      "dependsOn": ["🚀 Start Backend", "🌐 Start Frontend"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 Install All Dependencies",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && echo '✅ Backend deps installed' && cd ../frontend && npm install && echo '✅ Frontend deps installed'"
+      ],
+      "windows": {
+        "command": "cmd",
+        "args": [
+          "/c",
+          "cd backend && python -m venv venv && venv\\Scripts\\activate && pip install -r requirements.txt && echo Backend deps installed && cd ..\\frontend && npm install && echo Frontend deps installed"
+        ]
+      },
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "new" },
+      "problemMatcher": []
+    },
+    {
+      "label": "🗑️ Reset Database",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "rm -f backend/freelanceos.db && echo '✅ Database reset — restart backend to re-seed with demo data'"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "del /f backend\\freelanceos.db && echo Database reset - restart backend to re-seed"]
+      },
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ]
+}
