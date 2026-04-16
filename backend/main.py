@@ -12,17 +12,7 @@ from routers import auth_router, dashboard, projects, clients, time_entries, inv
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Startup and shutdown lifecycle."""
     print(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
-    # Create all tables
-    create_tables()
-    # Seed demo data
-    db = SessionLocal()
-    try:
-        from seed_data import seed_database
-        seed_database(db)
-    finally:
-        db.close()
     yield
     print("Shutting down FreelanceOS API")
 
